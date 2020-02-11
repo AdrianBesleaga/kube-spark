@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
     description := "Spark example to analyze dog lover's tweets",
     libraryDependencies ++= Seq(
       scalaTest % Test,
-      "org.apache.spark" %% "spark-sql" % "2.4.4"
+      "org.apache.spark" %% "spark-sql" % "2.4.5"
     )
   )
 
