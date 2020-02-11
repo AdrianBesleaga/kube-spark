@@ -3,11 +3,13 @@ kind: Pod
 metadata:
   name: spark-client
 spec:
-  sparkConfigMap: "spark-defaults"
   volumes:
     - name: shared-vol
       persistentVolumeClaim:
         claimName: data-client-share
+    - name: config-volume
+      configMap:
+        name: spark-defaults
   containers:
   - name: spark-client
     image: "gcr.io/spark-operator/spark:v2.4.5"
@@ -17,3 +19,5 @@ spec:
     volumeMounts:
       - name: shared-vol
         mountPath: /data
+      - name: config-volume
+        mountPath: /etc/spark/conf
