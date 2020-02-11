@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   name: spark-client
 spec:
+  sparkConfigMap: "spark-defaults"
   volumes:
     - name: shared-vol
       persistentVolumeClaim:
