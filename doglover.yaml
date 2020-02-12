@@ -6,7 +6,7 @@ metadata:
 spec:
   type: Scala
   mode: cluster
-  image: "gcr.io/spark-operator/spark:v2.4.5"
+  image: "uprush/apache-spark/spark:2.4.5"
   imagePullPolicy: Always
   mainClass: example.DogLover
   mainApplicationFile: "s3a://deephub/user/yijiang/doglover/doglover_2.12-0.1.0-SNAPSHOT.jar"
