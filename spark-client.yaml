@@ -12,7 +12,7 @@ spec:
         name: spark-defaults
   containers:
   - name: spark-client
-    image: "gcr.io/spark-operator/spark:v2.4.5"
+    image: "uprush/apache-spark/spark:v2.4.5"
     # Just spin & wait forever
     command: [ "tail", "-f", "/dev/null" ]
     # Configure a mountpoint for the volume we defined above
