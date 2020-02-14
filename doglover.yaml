@@ -14,16 +14,16 @@ spec:
   restartPolicy:
     type: Never
   volumes:
-    - name: "shared-vol"
+    - name: "staging-vol"
       persistentVolumeClaim:
-        claimName: data-client-share
+        claimName: data-staging-share
   driver:
     cores: 1
     coreLimit: "1200m"
     memory: "512m"
     volumeMounts:
-      - name: "shared-vol"
-        mountPath: "/data"
+      - name: "staging-vol"
+        mountPath: "/home/spark/tmp"
     labels:
       version: "2.4.5"
     serviceAccount: spark
@@ -32,8 +32,8 @@ spec:
     instances: 2
     memory: "512m"
     volumeMounts:
-      - name: "shared-vol"
-        mountPath: "/data"
+      - name: "staging-vol"
+        mountPath: "/home/spark/tmp"
     labels:
       version: "2.4.5"
   # Workaround for issue #216
@@ -49,8 +49,8 @@ spec:
     "spark.hadoop.fs.s3a.committer.name": "directory"
     "spark.sql.sources.commitProtocolClass": "org.apache.spark.internal.io.cloud.PathOutputCommitProtocol"
     "spark.sql.parquet.output.committer.class": "org.apache.spark.internal.io.cloud.BindingParquetOutputCommitter"
-    "spark.hadoop.fs.s3a.committer.tmp.path": "file:///data/s3a/staging"
-    "spark.hadoop.fs.s3a.buffer.dir": "/data/s3a/buffer"
+    "spark.hadoop.fs.s3a.committer.tmp.path": "file:///home/spark/tmp/staging"
+    "spark.hadoop.fs.s3a.buffer.dir": "/home/spark/tmp/buffer"
     "spark.eventLog.dir": "s3a://deephub/spark/spark-events/"
     "spark.eventLog.enabled": "true"
     "spark.sql.warehouse.dir": "s3a://deephub/spark/warehouse"
