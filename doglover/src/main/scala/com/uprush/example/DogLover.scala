@@ -14,7 +14,7 @@ object DogLover {
 	// Count total number of rows in all JSON files.
 	var numTweets = tweetsDF.count()
 
-    println(s"Number of tweets: $numTweets")
+    println(s"\nNumber of tweets: $numTweets")
 
     // Take a look at its JSON schema.
 	tweetsDF.printSchema()
@@ -29,8 +29,8 @@ object DogLover {
 
 	// Top 10 influential English language users.
 	val top10 = spark.sql("select screen_name, followers_count from users where lang = 'en' order by followers_count desc limit 10")
-	println("Top 10 influential English language users:")
-	println(top10)
+	println("\nTop 10 influential English language users:")
+	top10.show()
 
 	// Persist the user dataframe in query optimized format. Parquet is a optimized file format for Apache Hive query.
 	// S3 is a eventual consistency model, which may cause some issue on the Spark save job. 
@@ -38,17 +38,17 @@ object DogLover {
 	// On FlashBlade, Spark can directly persist dataframe via S3A without consistency concern. 
 	// This is possible because FlashBlade supports strong consistency S3 implementation.
 	val users_dir = "s3a://deephub/user/yijiang/doglover/twitter-users/"
-	println(s"Writing dataframe to: $users_dir")
+	println(s"\nWriting dataframe to: $users_dir")
 	users.write.format("parquet").mode("overwrite").save(users_dir)
 
 	// Validate data is successfully written.
-	println(s"Loading parquet data from: $users_dir")
+	println(s"\nLoading parquet data from: $users_dir")
 	val users_pq = spark.read.format("parquet").load(users_dir)
 
-	println("Running validating SQL")
+	println("\nRunning validation SQL")
 	users_pq.createOrReplaceTempView("users_pq")
 	spark.sql("select count(*) from users_pq").show()
-	spark.sql("SELECT screen_name, text from users_pq limit 10").show()
+	spark.sql("select screen_name, followers_count from users_pq where lang = 'en' order by followers_count desc limit 10").show()
 
     spark.stop()
   }
