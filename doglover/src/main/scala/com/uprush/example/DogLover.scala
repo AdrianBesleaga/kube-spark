@@ -48,7 +48,7 @@ object DogLover {
 	println("\nRunning validation SQL")
 	users_pq.createOrReplaceTempView("users_pq")
 	spark.sql("select count(*) from users_pq").show()
-	spark.sql("select screen_name, followers_count from users_pq where lang = 'en' order by followers_count desc limit 10").show()
+	spark.sql("select screen_name, followers_count, text from users_pq where lang = 'en' order by followers_count desc limit 10").show()
 
     spark.stop()
   }
