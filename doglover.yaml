@@ -13,10 +13,17 @@ spec:
   sparkVersion: "2.4.5"
   restartPolicy:
     type: Never
+  volumes:
+    - name: "shared-vol"
+      persistentVolumeClaim:
+        claimName: data-client-share
   driver:
     cores: 1
     coreLimit: "1200m"
     memory: "512m"
+    volumeMounts:
+      - name: "shared-vol"
+        mountPath: "/data"
     labels:
       version: "2.4.5"
     serviceAccount: spark
@@ -24,6 +31,9 @@ spec:
     cores: 1
     instances: 2
     memory: "512m"
+    volumeMounts:
+      - name: "shared-vol"
+        mountPath: "/data"
     labels:
       version: "2.4.5"
   # Workaround for issue #216
@@ -39,7 +49,7 @@ spec:
     "spark.hadoop.fs.s3a.committer.name": "directory"
     "spark.sql.sources.commitProtocolClass": "org.apache.spark.internal.io.cloud.PathOutputCommitProtocol"
     "spark.sql.parquet.output.committer.class": "org.apache.spark.internal.io.cloud.BindingParquetOutputCommitter"
-    "spark.hadoop.fs.s3a.committer.tmp.path": "tmp/staging"
+    "spark.hadoop.fs.s3a.committer.tmp.path": "file:///data/staging"
     "spark.eventLog.dir": "s3a://deephub/spark/spark-events/"
     "spark.eventLog.enabled": "true"
     "spark.sql.warehouse.dir": "s3a://deephub/spark/warehouse"
