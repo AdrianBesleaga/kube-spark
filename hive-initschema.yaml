@@ -8,7 +8,7 @@ spec:
       containers:
       - name: hive-schema
         image: uprush/apache-hive:3.1.2
-        command: ["/opt/hive-metastore/bin/schematool"]
+        command: ["/opt/hive/bin/schematool"]
         args: ["--verbose" ,"-initSchema" , "-dbType", "postgres" , "-userName", "hive",
           "-passWord", "mypass" , "-url", "jdbc:postgresql://10.244.2.108:5432/metastore?createDatabaseIfNotExist=true"]
       restartPolicy: Never
