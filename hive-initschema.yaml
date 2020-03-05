@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: hive-schema
-        image: uprush/apache-hive-metastore:3.0.0
+        image: uprush/apache-hive:3.1.2
         command: ["/opt/hive-metastore/bin/schematool"]
         args: ["--verbose" ,"-initSchema" , "-dbType", "postgres" , "-userName", "hive",
           "-passWord", "mypass" , "-url", "jdbc:postgresql://10.244.2.108:5432/metastore?createDatabaseIfNotExist=true"]
