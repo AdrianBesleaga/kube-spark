@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hive-initschema
+spec:
+  template:
+    spec:
+      containers:
+      - name: hive-schema
+        image: uprush/apache-hive-metastore
+        command: ["/opt/hive-metastore/bin/schematool"]
+        args: ["--verbose" ,"-initSchema" , "-dbType", "postgres" , "-userName", "hive",
+          "-passWord", "mypass" , "-url", "jdbc:postgresql://10.244.2.108:5432/metastore?createDatabaseIfNotExist=true"]
+      restartPolicy: Never
+  backoffLimit: 4
