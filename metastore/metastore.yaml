@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: metastore
+  namespace: warehouse
 spec:
   ports:
   - port: 9083
@@ -17,6 +18,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: metastore
+  namespace: warehouse
 spec:
   selector:
     matchLabels:
