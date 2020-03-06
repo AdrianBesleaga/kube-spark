@@ -8,7 +8,11 @@ spec:
   - port: 9083
   selector:
     app: metastore
+
+
 ---
+
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,17 +46,16 @@ spec:
         - containerPort: 9083
         volumeMounts:
         - name: metastore-cfg-vol
-          mountPath: /opt/hive-metastore/conf/metastore-site.xml
+          mountPath: /opt/hive/conf/metastore-site.xml
           subPath: metastore-site.xml
         - name: metastore-cfg-vol
           mountPath: /opt/hadoop/etc/hadoop/core-site.xml
           subPath: core-site.xml
-        command: ["/opt/hive-metastore/bin/start-metastore"]
-        args: ["-p", "9083"]
+        command: ["/opt/hive/bin/start-metastore.sh"]
         resources:
           requests:
-            memory: "16G"
-            cpu: 4
+            memory: "4G"
+            cpu: 2
         imagePullPolicy: Always
       volumes:
         - name: metastore-cfg-vol
