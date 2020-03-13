@@ -25,7 +25,7 @@
 </property>
 <property>
 	<name>metastore.warehouse.dir</name>
-	<value>s3a://deephub/warehouse/</value>
+	<value>s3a://bigdatabucket/warehouse/</value>
 </property>
 <property>
 	<name>metastore.thrift.port</name>
